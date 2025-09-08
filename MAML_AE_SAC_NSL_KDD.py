@@ -314,7 +314,6 @@ class QNetwork():
 
 @tf.keras.utils.register_keras_serializable()
 def sac_loss(y_true, y_pred):
-    """ y_true 是 Q(*, action_n), y_pred 是 pi(*, action_n) """
     qs = alpha * tf.math.xlogy(y_pred, y_pred) - y_pred * y_true
     return tf.reduce_sum(qs, axis=-1)
 
@@ -1030,4 +1029,5 @@ if __name__ == "__main__":
     with open("training_log.txt", "a") as f:
         f.write(log_text)
     with open("resultsmote", "a") as f:
+
         f.write(log)
