@@ -385,16 +385,13 @@ class QNetwork():
         return loss
 
     def copy_model(model):
-        """Returns a copy of a keras model."""
         model.save('tmp_model')
         return tf.keras.models.load_model('tmp_model')
+        
 @tf.keras.utils.register_keras_serializable()
 def sac_loss(y_true, y_pred):
-    """ y_true 是 Q(*, action_n), y_pred 是 pi(*, action_n) """
     qs = 0.2 * tf.math.xlogy(y_pred, y_pred) - y_pred * y_true
     return tf.reduce_sum(qs, axis=-1)
-
-
 
 class ReplayMemory(object):
     """Implements basic replay memory"""
@@ -1101,3 +1098,4 @@ if __name__ == "__main__":
     plot_confusion_matrix(cnf_matrix, classes=env.attack_types, normalize=True,
                            title='Normalized confusion matrix')
     plt.savefig('confusion_matrix_adversarial.svg', format='svg', dpi=1000)
+
